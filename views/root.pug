@@ -1,0 +1,68 @@
+html
+    head
+        meta(charset="utf8")
+        link(rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css")
+        script(src="/client.js")
+    body
+        -let nowDate = new Date();
+        div(class="w3-container w3-center w3-blue")
+            h2 Library
+        div(class="w3-container w3-border-bottom w3-padding w3-light-gray"
+        ) Sort by:&nbsp;
+            select(class="w3-button w3-border")
+                option(value="all" onclick="handleRequest('all');") All
+                option(value="available" onclick="handleRequest('available');") Available
+                option(value="expired" onclick="handleRequest('expired');") Expired
+        div(class="w3-container w3-center")
+            ul(class="w3-ul" id="libraryList")
+                each book in library
+                    li(class="w3-hover-pale-yellow w3-display-container")
+                        span(onclick="document.getElementById('delete-book').style.display='block'; document.getElementById('delete-form').action = this.parentElement.children[1].attributes.href.nodeValue + '/delete'"
+                            class="w3-button w3-display-right w3-hover-red") &times;
+                        a(href=`/book/${book.id}` class="w3-text-blue") &laquo;#{book.title}&raquo;
+                        br
+                        =book.author + " | " + (book.returnDate === null ? "Available" : `until ${book.returnDate}`)
+        button(class="w3-button w3-large w3-circle w3-xlarge w3-ripple w3-blue w3-hover-blue"
+            style="position: fixed; bottom: 40; right: 40"
+            onclick="document.getElementById('add-book').style.display='block';") +
+
+        div(class="w3-modal" id="add-book")
+            div(class="w3-modal-content")
+                header(class="w3-container")
+                    span(class="w3-button w3-hover-red w3-display-topright"
+                        onclick="document.getElementById('add-book').style.display='none';") &times;
+                div(class="w3-container w3-center w3-margin-top") Specify book properties:
+                    form(method="POST", action="/")
+                        input(name="title" placeholder="Title"
+                            class="w3-margin" style="width:50%")
+                        br
+                        input(name="author" placeholder="Author"
+                            class="w3-margin-bottom"
+                            style="width:50%")
+                        br
+                        input(name="year" type="number" min="0" max=nowDate.getFullYear() step="1"
+                            value=nowDate.getFullYear() class="w3-margin-bottom" id="yearInput"
+                            style="width:50%")
+                        br
+                        input(name="language" placeholder="Book language"
+                            class="w3-margin-bottom"
+                            style="width:50%")
+                        br
+                        button(type="submit"
+                            onclick="if(document.getElementById('yearInput').textContent.match('[0-9]+') && parseInt(document.getElementById('yearInput').textContent) <= (new Date.getFullYear())) document.getElementById('add-book').style.display='none';"
+                            class="w3-button w3-border w3-border-black w3-light-gray w3-hover-gray") Done
+
+        div(class="w3-modal" id="delete-book")
+            div(class="w3-modal-content")
+                header(class="w3-container")
+                    span(class="w3-button w3-hover-red w3-display-topright"
+                        onclick="document.getElementById('delete-book').style.display='none';") &times;
+                div(class="w3-container w3-center w3-margin-top") Do you really want to delete this book?
+                    form(method="POST" action="" class="w3-margin" id="delete-form")
+                        button(type="submit"
+                            onclick="document.getElementById('delete-book').style.display='none';"
+                            class="w3-button w3-margin-right w3-border w3-border-black w3-light-gray w3-hover-gray")
+                            | Yes
+                        button(type="button" onclick="document.getElementById('delete-book').style.display='none';"
+                            class="w3-button w3-margin-left w3-border w3-border-black w3-light-gray w3-hover-gray")
+                            | No

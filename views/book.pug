@@ -1,0 +1,130 @@
+html
+    head
+        meta(charset="utf8")
+        link(rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css")
+    body
+        -header = `"${title}" by ${author}`;
+        -todayDate = new Date();
+        -today = todayDate.toISOString().split("T")[0];
+        //-today = todayDate.toLocaleString().split(new RegExp("[^-0-9/]"))[0];
+        -hyperrefAlter = `/book/${id}`;
+        -hyperrefTake = `/book/${id}/take`;
+        -hyperrefReturn = `/book/${id}/return`;
+        -hyperrefDelete = `/book/${id}/delete`;
+
+        div(class="w3-container w3-blue")
+            h3 #{header}
+        div(class="w3-container")
+            p Detailed information:
+            ul(class="w3-ul")
+                li Edition year: #{year}
+                li Language: #{language}
+                -if(givenTo === null)
+                    li Status: Available &#10003;
+                -else
+                    li Status:
+                        button(class="w3-white w3-border-0 w3-text-blue" style="cursor: pointer"
+                        onclick="document.getElementById('reader-info').style.display='block';")
+                            | <u>Taken</u>
+
+            button(onclick="document.getElementById('edit-book-data').style.display='block';"
+            class="w3-button w3-yellow w3-hover-amber w3-margin") Alter
+            -if(givenTo === null)
+                button(onclick="document.getElementById('take-book').style.display='block';"
+                    class="w3-button w3-light-blue w3-hover-blue " +
+                    "w3-text-black w3-hover-text-black w3-margin-right") Take book
+            -else
+                button(onclick="document.getElementById('return-book').style.display='block';"
+                        class="w3-button w3-aqua w3-hover-cyan w3-margin-right") Return book
+            button(onclick="document.getElementById('delete-book').style.display='block';"
+            class="w3-button w3-deep-orange w3-hover-red") Delete
+
+        div(class="w3-container w3-margin-top")
+            a(href="/" class="w3-text-blue") All books
+
+        div(class="w3-modal" id="edit-book-data")
+            div(class="w3-modal-content")
+                header(class="w3-container")
+                    span(class="w3-button w3-hover-red w3-display-topright"
+                        onclick="document.getElementById('edit-book-data').style.display='none';") &times;
+                div(class="w3-container w3-center") Edit book data:
+                    form(method="POST", action=hyperrefAlter)
+                        input(name="title" placeholder="Title" value=title
+                            class="w3-margin" style="width:50%")
+                        br
+                        input(name="author" placeholder="Author" value=author
+                            class="w3-margin-bottom"
+                            style="width:50%")
+                        br
+                        input(name="year" type="number" min="0" max=todayDate.getFullYear() step="1"
+                            value=year class="w3-margin-bottom" id="yearInput"
+                            style="width:50%" required="true")
+                        br
+                        input(name="language" placeholder="Book language" value=language
+                            class="w3-margin-bottom"
+                            style="width:50%")
+                        br
+                        button(type="submit"
+                        onclick="if(document.getElementById('yearInput').textContent.match('[0-9]+') && parseInt(document.getElementById('yearInput').textContent) <= (new Date.getFullYear())) document.getElementById('edit-book-data').style.display='none';"
+                        class="w3-button w3-border w3-border-black w3-light-gray w3-hover-gray") Done
+
+        div(class="w3-modal" id="take-book")
+            div(class="w3-modal-content")
+                header(class="w3-container")
+                    span(class="w3-button w3-hover-red w3-display-topright"
+                        onclick="document.getElementById('take-book').style.display='none';") &times;
+                div(class="w3-container w3-center") Specify taker's name and return date:
+                    form(method="POST", action=hyperrefTake)
+                        input(name="givenTo" placeholder="Bookholder name" class="w3-margin"
+                        style="width:50%")
+                        br
+                        input(name="returnDate" type="date"
+                        value=today
+                        class="w3-margin-bottom"
+                        style="width:50%")
+                        br
+                        button(type="submit"
+                            onclick="document.getElementById('take-book').style.display='none';"
+                            class="w3-button w3-border w3-border-black w3-light-gray w3-hover-gray")
+                            | Done
+
+        div(class="w3-modal" id="reader-info")
+            div(class="w3-modal-content")
+                header(class="w3-container")
+                    span(class="w3-button w3-hover-red w3-display-topright"
+                        onclick="document.getElementById('reader-info').style.display='none';") &times;
+                div(class="w3-container w3-center")
+                    p Book has been taken by #{givenTo ? givenTo : "Anon"} until #{returnDate} #{returnDate < today ? "(borrow time exceeded)" : ""}
+                    button(onclick="document.getElementById('reader-info').style.display='none';"
+                        class="w3-margin-bottom w3-button w3-border w3-border-black w3-light-gray w3-hover-gray")
+                        | Done
+
+        div(class="w3-modal" id="return-book")
+            div(class="w3-modal-content")
+                header(class="w3-container")
+                    span(class="w3-button w3-hover-red w3-display-topright"
+                        onclick="document.getElementById('return-book').style.display='none';") &times;
+                div(class="w3-container w3-center w3-margin") Do you want to return this book?
+                    form(method="POST" action=hyperrefReturn class="w3-margin")
+                        button(type="submit"
+                            onclick="document.getElementById('return-book').style.display='none';"
+                            class="w3-button w3-margin-right w3-border w3-border-black w3-light-gray w3-hover-gray")
+                            | Yes
+                        button(type="button" onclick="document.getElementById('return-book').style.display='none';"
+                            class="w3-button w3-margin-left w3-border w3-border-black w3-light-gray w3-hover-gray")
+                            | No
+
+        div(class="w3-modal" id="delete-book")
+            div(class="w3-modal-content")
+                header(class="w3-container")
+                    span(class="w3-button w3-hover-red w3-display-topright"
+                        onclick="document.getElementById('delete-book').style.display='none';") &times;
+                div(class="w3-container w3-center w3-margin-top") Do you really want to delete this book?
+                    form(method="POST" action=hyperrefDelete class="w3-margin" id="delete-form")
+                        button(type="submit"
+                            onclick="document.getElementById('delete-book').style.display='none';"
+                            class="w3-button w3-margin-right w3-border w3-border-black w3-light-gray w3-hover-gray")
+                            | Yes
+                        button(type="button" onclick="document.getElementById('delete-book').style.display='none';"
+                            class="w3-button w3-margin-left w3-border w3-border-black w3-light-gray w3-hover-gray")
+                            | No

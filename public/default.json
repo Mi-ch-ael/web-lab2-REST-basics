@@ -1,0 +1,92 @@
+[
+  {
+    "id": 0,
+    "title": "Oliver Twist",
+    "author": "Charles Dickens",
+    "year": "1956",
+    "language": "English",
+    "givenTo": null,
+    "returnDate": null
+  },
+  {
+    "id": 1,
+    "title": "Great Expectations",
+    "author": "Charles Dickens",
+    "year": "1996",
+    "language": "English",
+    "givenTo": null,
+    "returnDate": null
+  },
+  {
+    "id": 2,
+    "title": "The Lord of the Rings",
+    "author": "John R. R. Tolkien",
+    "year": "2002",
+    "language": "English",
+    "givenTo": null,
+    "returnDate": null
+  },
+  {
+    "id": 3,
+    "title": "Oliver Twist",
+    "author": "Charles Dickens",
+    "year": "1987",
+    "language": "English",
+    "givenTo": null,
+    "returnDate": null
+  },
+  {
+    "id": 4,
+    "title": "The Adventures of Tom Sawyer",
+    "author": "Mark Twain",
+    "year": "1975",
+    "language": "English",
+    "givenTo": null,
+    "returnDate": null
+  },
+  {
+    "id": 5,
+    "title": "The Tale of Two Cities",
+    "author": "Charles Dickens",
+    "year": "1990",
+    "language": "English",
+    "givenTo": null,
+    "returnDate": null
+  },
+  {
+    "id": 6,
+    "title": "Hamlet",
+    "author": "William Shakespeare",
+    "year": "1964",
+    "language": "English",
+    "givenTo": null,
+    "returnDate": null
+  },
+  {
+    "id": 7,
+    "title": "All Quiet on The Western Front",
+    "author": "Erich Maria Remark",
+    "year": "1989",
+    "language": "German",
+    "givenTo": null,
+    "returnDate": null
+  },
+  {
+    "id": 8,
+    "title": "Christmas Carol",
+    "author": "Charles Dickens",
+    "year": "1932",
+    "language": "English",
+    "givenTo": null,
+    "returnDate": null
+  },
+  {
+    "id": 9,
+    "title": "Dubrovsky",
+    "author": "Alexander Pushkin",
+    "year": "2001",
+    "language": "Russian",
+    "givenTo": null,
+    "returnDate": null
+  }
+]
